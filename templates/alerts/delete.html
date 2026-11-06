@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="panel" style="max-width:600px;margin:auto">
+<h2>Delete Alert</h2>
+<p>Are you sure you want to delete <strong>{{ alert.alert_name }}</strong>?</p>
+<form method="post">{% csrf_token %}
+<button class="btn" type="submit">Yes, Delete</button>
+<a class="btn btn-light" href="{% url 'records' %}">Cancel</a>
+</form>
+</div>
+{% endblock %}

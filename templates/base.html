@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dynatrace Alert Tracker</title>
+{% block head_extra %}{% endblock %}
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f5f5;color:#111;font:15px Arial,sans-serif}
+header{background:#111;color:#fff;padding:20px 5%;display:flex;justify-content:space-between;align-items:center;gap:16px}
+header h1{font-size:21px;margin:0}.wrap{max-width:1200px;margin:32px auto;padding:0 18px}
+.panel{background:#fff;border:1px solid #ddd;border-radius:8px;padding:22px}
+a,.btn{display:inline-block;text-decoration:none;background:#111;color:#fff;padding:10px 15px;border:1px solid #111;border-radius:4px;cursor:pointer;font-size:14px}
+.btn-light{background:#fff;color:#111}.btn-danger{background:#fff;color:#111;border-color:#999}
+table{width:100%;border-collapse:collapse;background:#fff}th,td{padding:12px 10px;border-bottom:1px solid #ddd;text-align:left;vertical-align:top}th{background:#eee}
+.table-wrap{overflow-x:auto;margin-top:18px}.actions{white-space:nowrap}.actions a{margin:2px}
+form p{margin:0 0 16px}label{display:block;font-weight:bold;margin-bottom:6px}
+input,select,textarea{width:100%;padding:10px;border:1px solid #bbb;border-radius:4px;font:inherit}
+textarea{resize:vertical}.field-errors{color:#a00;font-size:13px;margin-top:4px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.full{grid-column:1/-1}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.muted{color:#666}.empty{text-align:center;padding:32px;color:#666}
+@media(max-width:650px){.form-grid{grid-template-columns:1fr}.full{grid-column:auto}header{align-items:flex-start;flex-direction:column}}
+</style>
+</head>
+<body>
+<header><h1>Dynatrace Alert Tracker</h1><span>{% if user.is_authenticated %}Signed in: {{ user.username }} · <form method="post" action="{% url 'logout' %}" style="display:inline">{% csrf_token %}<button type="submit" style="background:transparent;color:white;border:0;padding:0;text-decoration:underline;cursor:pointer">Log out</button></form>{% else %}Team access{% endif %}</span></header>
+<div class="wrap">{% block content %}{% endblock %}</div>
+</body></html>

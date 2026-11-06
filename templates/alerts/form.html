@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="panel" style="max-width:850px;margin:auto">
+  <div class="topline"><h2 style="margin:0">{{ page_title }}</h2><a class="btn-light" href="{% url 'records' %}">Back to Records</a></div>
+  <form method="post" style="margin-top:24px">{% csrf_token %}
+    {% if form.non_field_errors %}<div class="field-errors">{{ form.non_field_errors }}</div>{% endif %}
+    <div class="form-grid">
+      <div><label for="entered_by">Your name (optional)</label><input id="entered_by" name="entered_by" maxlength="100" placeholder="Enter your name"></div>
+      <div><label for="updated_by">Updated by (optional)</label><input id="updated_by" name="updated_by" maxlength="100" placeholder="Enter your name"></div>
+      {% for field in form %}
+      <div class="{% if field.name == 'update' %}full{% endif %}" id="wrap-{{ field.name }}">
+        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+        {{ field }}
+        {% for error in field.errors %}<div class="field-errors">{{ error }}</div>{% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+    <div style="display:flex;gap:10px;margin-top:22px"><button class="btn" type="submit">Save Alert</button><a class="btn btn-light" href="{% url 'records' %}">Cancel</a></div>
+  </form>
+</div>
+<script>
+const tower = document.getElementById("id_tower");
+const otherWrap = document.getElementById("wrap-other_tower");
+function toggleOther(){otherWrap.style.display = tower.value === "Other" ? "block" : "none";}
+tower.addEventListener("change", toggleOther);toggleOther();
+</script>
+{% endblock %}

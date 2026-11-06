@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block head_extra %}<meta http-equiv="refresh" content="15">{% endblock %}
+{% block content %}
+<div class="panel">
+  <div class="topline">
+    <div><h2 style="margin:0 0 6px">Alert Records</h2><div class="muted">{{ alerts|length }} record{{ alerts|length|pluralize }} · Shared team database · Auto-refreshes every 15 seconds</div></div>
+    <a href="{% url 'add_alert' %}">+ Add Alert</a>
+  </div>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>Date</th><th>Alert Name</th><th>Triggered Time</th><th>Tower</th><th>Update</th><th>Status</th><th>Entered By</th><th>Last Updated</th><th>Actions</th></tr></thead>
+    <tbody>
+    {% for alert in alerts %}
+      <tr>
+        <td>{{ alert.date|date:"d-m-Y" }}</td>
+        <td>{{ alert.alert_name }}</td>
+        <td>{{ alert.triggered_time|time:"H:i" }}</td>
+        <td>{% if alert.tower == "Other" %}{{ alert.other_tower }}{% else %}{{ alert.tower }}{% endif %}</td>
+        <td>{{ alert.update|linebreaksbr }}</td>
+        <td>{{ alert.status }}</td>
+        <td>{{ alert.entered_by|default:"—" }}</td>
+        <td>{{ alert.last_updated_by|default:"—" }}<br><span class="muted">{{ alert.updated_at|date:"d-m-Y H:i" }}</span></td>
+        <td class="actions"><a class="btn-light" href="{% url 'edit_alert' alert.pk %}">Edit</a><a class="btn-danger" href="{% url 'delete_alert' alert.pk %}">Delete</a></td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="9" class="empty">No alerts added yet. Select “Add Alert” to create your first record.</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</div>
+{% endblock %}
